@@ -60,7 +60,7 @@ func run(args []string, stdout io.Writer) error {
 
 	}
 
-	fmt.Printf("%d repositories to update\n", len(reposToUpdate))
+	fmt.Fprintf(stdout, "%d repositories to update\n", len(reposToUpdate))
 
 	for _, r := range reposToUpdate {
 		b, err := dependabot.Generate(reposToUpdate[r.Name])
@@ -68,7 +68,7 @@ func run(args []string, stdout io.Writer) error {
 			log.Fatal(err)
 		}
 
-		fmt.Printf("updating %s repository\n", r.Name)
+		fmt.Fprintf(stdout, "updating %s repository\n", r.Name)
 
 		if err := gh.UpdateFile(ctx, CommitMsg, r.Name, dependabot.ConfPathFile, b); err != nil {
 			log.Fatal(err)
